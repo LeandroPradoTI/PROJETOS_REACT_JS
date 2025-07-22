@@ -1,7 +1,7 @@
 import "./Button.css"
 
 
-const Button = ({id, text}) => {
+const Button = ({id, text, action}) => {
     const handleAction = (e) => {
         action(e)
     }

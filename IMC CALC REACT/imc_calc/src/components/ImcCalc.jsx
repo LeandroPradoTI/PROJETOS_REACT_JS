@@ -2,14 +2,28 @@ import { useState } from "react"
 import "./ImcCalc.css"
 import Button from "./Button"
 
-const ImcCalc = () => {
-    const [height, setHeigth] = useState("")
-    const [weigth, setWeigth] = useState("")
+const ImcCalc = ({ calcImc }) => {
+    const [height, setHeight] = useState("");
+    const [weight, setWeight] = useState("");
 
     const clearForm = (e) => {
         e.preventdefault()
-        setHeigth("")
-        setWeigth("")
+        setHeight("")
+        setWeight("")
+    }
+
+    const validDigits = (text) => {
+        return text.replace(/[^0-9,]/g, "")
+    }
+
+    const handleHeightChange = (e) => {
+        const updatedValue = validDigits(e.target.value)
+        setHeight(updatedValue)
+    }
+
+     const handleWeightChange = (e) => {
+        const updatedValue = validDigits(e.target.value)
+        setWeight(updatedValue)
     }
 
   return (
@@ -24,7 +38,7 @@ const ImcCalc = () => {
                     name="heigth" 
                     id="height" 
                     placeholder="Exemplo 1,75"
-                    onChange={(e) => setHeigth(e.target.value)}
+                    onChange={(e) => handleHeightChange(e)}
                     value={height}
                     />
                 </div>
@@ -33,15 +47,15 @@ const ImcCalc = () => {
                     <input 
                     type="text" 
                     name="weigth" 
-                    id="weigth" 
+                    id="weight" 
                     placeholder="Exemplo 70,5"
-                    onChange={(e) => setWeigth(e.target.value)}
-                    value={weigth}
+                    onChange={(e) => handleWeightChange(e)}
+                    value={weight}
                     />
                 </div>
             </div>
             <div className="action-control">
-                <Button id="calc-btn" text="Calcular"/>
+                <Button id="calc-btn" text="Calcular" action={(e) => calcImc(e, height, weight)}/>
                 <Button id="clear-btn" text="Limpar" action={clearForm}/>
             </div>
         </form>
